@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>欢迎页面-X-admin2.2</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <link rel="stylesheet" href="/static/admin/css/font.css">
+        <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+        <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">演示</a>
+                <a>
+                    <cite>导航元素</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body layui-collapse">
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">刷选项</h2>
+                                <div class="layui-colla-content layui-show">
+                                    <form class="layui-form layui-col-space5">
+                                        <div class="layui-inline layui-show-xs-block">
+                                            <select name="type">
+                                                <option value="">商品类型</option>
+                                                <#range $key,$item:=.GoodsTypeDesc#>
+                                                <option value="<# $key #>"><# $item #></option>
+                                                <# end #>
+                                            </select>
+                                        </div>
+                                        <div class="layui-inline layui-show-xs-block">
+                                            <select name="isVerify">
+                                                <option>审核状态</option>
+                                                <option value="1">已审核</option>
+                                                <option value="0">未审核</option>
+                                            </select>
+                                        </div>
+                                        <div class="layui-inline layui-show-xs-block">
+                                            <input type="text" name="name" placeholder="标签名" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-inline layui-show-xs-block">
+                                            <button class="layui-btn" lay-submit lay-filter="*">
+                                                <i class="layui-icon">&#xe615;</i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table" lay-data="{url:'/admin/goodsTypeIndex',page:true,method:'post',toolbar: '#toolbarDemo',id:'tableOne'}" lay-filter="tableOne">
+                                <thead>
+                                    <tr>
+                                        <th lay-data="{type:'checkbox'}">ID</th>
+                                        <th lay-data="{field:'Id', width:80}">ID</th>
+                                        <th lay-data="{field:'Name', edit: 'text'}">标签名</th>
+                                        <th lay-data="{field:'Order', edit: 'text'}">排序</th>
+                                        <th lay-data="{field:'IsVerify',templet:'#verify_tem'}">审核</th>
+                                        <th lay-data="{field:'TypeDesc'}">类别</th>
+                                        <th lay-data="{field:'CreatedAt'}">新增时间</th>
+                                        <th lay-data="{fixed: 'right', width: 220, align:'center', toolbar: '#barDemo'}">操作</th></tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/html" id="verify_tem">
+        {{#  if(d.IsVerify == 1){ }}
+        <input type="checkbox" checked lay-filter="verify_switch" name="switch" value="{{d.Id}}" lay-skin="switch">
+        {{#  } else { }}
+            <input type="checkbox"  lay-filter="verify_switch" name="switch" value="{{d.Id}}" lay-skin="switch">
+        {{#  } }}
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    </script>
+    <script type="text/html" id="toolbarDemo">
+        <div class = "layui-btn-container" >
+            <button class="layui-btn" onclick="xadmin.open('添加','/admin/goodsTypeCreate',600,500)"><i class="layui-icon"></i>添加</button>
+        </div >
+    </script>
+<#/*    <script type="text/html" id="switchTpl">*/#>
+<#/*        <!-- 这里的checked的状态只是演示 -->*/#>
+<#/*        <input type = "checkbox" name = "sex" value = "1" lay-skin = "switch"lay-text = "女|男" lay-filter = "sexDemo"  >*/#>
+<#/*    </script>*/#>
+    <script>
+        layui.code
+        layui.use('laydate',
+        function() {
+            var laydate = layui.laydate;
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#start' //指定元素
+                ,trigger:"click"
+            });
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#end' //指定元素
+                ,trigger:"click"
+            });
+
+        });
+    </script>
+    <script>
+        layui.use('table',
+        function() {
+            var table = layui.table;
+
+            //监听单元格编辑
+            table.on('edit(tableOne)',
+            function(obj) {
+                var value = obj.value //得到修改后的值
+                ,
+                data = obj.data //得到所在行所有键值
+                ,
+                field = obj.field; //得到字段
+                var subData = {
+                    "Id":data.Id
+                }
+                subData[field] = value
+                var ur = updateInfo(subData)
+
+            });
+
+            //头工具栏事件
+            table.on('toolbar(tableOne)',
+            function(obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+                };
+            });
+
+            //右边编辑按钮监听
+            table.on('tool(tableOne)', function(obj){ //注：tool 是工具条事件名，tableOne 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+               if(layEvent === 'del'){ //删除
+                    layer.confirm('真的删除该数据吗？', function(index){
+                        updateInfo({
+                            "Id":data.Id
+                            ,"IsDel":1
+                        })
+                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+                        //向服务端发送删除指令
+                    });
+                } else if(layEvent === 'edit'){ //编辑
+                   // console.log(data)
+                   xadmin.open('编辑',"/admin/goodsTypeDetail?id="+data.Id,600,500)
+                } else if(layEvent === 'LAYTABLE_TIPS'){
+                    layer.alert('Hi，头部工具栏扩展的右侧图标。');
+                }
+            });
+
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('submit(*)', function(data){
+                    console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+
+                    table.reload('tableOne', {
+                        method: 'post'
+                        , where: data.field
+                        , page: {
+                            curr: 1
+                        }
+                    });
+                    return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                });
+
+                form.on('switch(verify_switch)', function(data){
+                    var subData = {
+                        "Id":data.value
+                    }
+                    var isVerify = 0;
+                    if(data.elem.checked == true){
+                        isVerify = 1;
+                    }
+                    subData['IsVerify'] = isVerify
+                    var ur = updateInfo(subData)
+                });
+            });
+        });
+
+        function updateInfo (data) {
+            console.log(data);
+            //发异步，把数据提交给后端
+            $.ajax({
+                type: "post",
+                url: "/admin/goodsTypeUpdate",
+                data: data,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code === 0) {
+                        return ''
+                    } else {
+                        return data.msg
+                    }
+                }
+            });
+        };
+
+
+    </script>
+    <script>
+        var _hmt = _hmt || []; (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script>
+
+</html>

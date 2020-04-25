@@ -1,0 +1,217 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-md-8">
+            <#range $item:=.list#>
+            <# if eq $item.Type 1 #>
+            <article class="content-item">
+                <div class="entry-media">
+                    <div class="post-title">
+                        <h2><a href="/articleDetail?id=<# $item.Id #>"> <# $item.Name #> </a></h2>
+                        <div class="entry-date">
+                            <ul>
+                                <li>
+                                    <a href='#'><# $item.TypeDesc #></a>
+                                </li>
+                                <li><# date $item.UpdatedAt "Y-m-d" #></li>
+                                <li><# $item.ViewNum #> 阅读</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bubble-line"></div>
+                    <div class="post-content">
+                        <div class="content_slide">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper s-slide-wrapper">
+                                    <div class="swiper-slide"><img src="<# $item.Image #>" alt="image"></div>
+                                    <div class="swiper-slide"><img src="<# $item.SmallImage #>" alt="image"></div>
+                                </div>
+                                <div class="swiper-button-prev circle-arrow"><i class="fa fa-chevron-left"></i>
+                                </div>
+                                <div class="swiper-button-next circle-arrow"><i class="fa fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p>
+                            <# $item.Description #>
+                        </p>
+                    </div>
+                    <div class="bubble-line"></div>
+                    <div class="post-footer">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <a href="/articleDetail?id=<# $item.Id #>" class="button">继续阅读</a>
+                            </div>
+                            <div class="col-sm-7 text-right">
+                                <div class="content-social">
+                                    <a href="javascript:;"><i class="fa fa-wechat"></i><span>微信</span></a>
+                                    <a href="javascript:;"><i class="fa fa-weibo"></i><span>微博</span></a>
+                                    <a href="javascript:;"><i class="fa fa-link"></i><span>复制</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <# else if eq $item.Type 2 #>
+            <article class="content-item">
+                <div class="entry-media">
+                    <div class="post-title">
+                        <h2><a href="#"><# $item.Name #></a></h2>
+                        <div class="entry-date">
+                            <ul>
+                                <li>
+                                    <a href='#'><# $item.TypeDesc #></a>
+                                </li>
+                                <li><# date $item.UpdatedAt "Y-m-d" #></li>
+                                <li>23 comment</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bubble-line"></div>
+                    <div class="post-content">
+                        <img src="<# $item.SmallImage #>" alt="not image">
+                        <p>
+                            <# $item.Description #>
+                        </p>
+                    </div>
+                    <div class="bubble-line"></div>
+                    <div class="post-footer">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <a href="/articleDetail?id=<# $item.Id #>" class="button">继续阅读</a>
+                            </div>
+                            <div class="col-sm-7 text-right">
+                                <div class="content-social">
+                                    <a href="javascript:;"><i class="fa fa-wechat"></i><span>微信</span></a>
+                                    <a href="javascript:;"><i class="fa fa-weibo"></i><span>微博</span></a>
+                                    <a href="javascript:;"><i class="fa fa-link"></i><span>复制</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <# else #>
+            空数据
+            <# end #>
+            <# end #>
+            <div class="post-navigation">
+                <#if gt .paginator.PageNums 1#>
+                <ul class="">
+                    <#if .paginator.HasPrev#>
+                    <li><a href="<#.paginator.PageLinkPrev#>"> <i class="fa fa-chevron-left"></i> </a></li>
+                    <#else#>
+
+                    <#end#>
+                    <#range $index, $page := .paginator.Pages#>
+                    <#if $.paginator.IsActive .#>
+                    <li>
+                        <span><#$page#></span>
+                    </li>
+                    <#else#>
+                    <li>
+                        <a href="<#$.paginator.PageLink $page#>"><#$page#></a>
+                    </li>
+                    <#end#>
+
+                    <#end#>
+                    <#if .paginator.HasNext#>
+                    <li><a href="<#.paginator.PageLinkNext#>"> <i class="fa fa-chevron-right"></i> </a></li>
+                    <#else#>
+
+                    <#end#>
+                </ul>
+                <#end#>
+            </div>
+        </div>
+        <div class="col-sm-4 sidebar">
+            <div class="widget">
+                <h3 class="widget-title">关于我</h3>
+                <div class="bubble-line"></div>
+
+                <div class="widget-content">
+                    <img src="/static/blog/images/widget/about.jpg" alt="not image">
+                    <p>Hello I’m Jenny Kurto author of Letter town blog. This is my personal space which is like to
+                        share
+                        others. And i’m living New York city working and blogging.</p>
+                    <div class="widget-more">
+                        <a href="javascript:;" class="button">More story</a>
+                    </div>
+                </div>
+            </div>
+            <div class="widget">
+                <h3 class="widget-title"> 分类</h3>
+                <div class="bubble-line"></div>
+                <div class="widget-content">
+                    <ul>
+                        <# range $item:=.GoodsTypeDesc #>
+                        <li>
+                            <a href="javascript:;"><# $item #></a>
+                        </li>
+                        <# end #>
+                    </ul>
+                </div>
+            </div>
+            <div class="widget">
+                <h3 class="widget-title"> Resent posts</h3>
+                <div class="bubble-line"></div>
+                <div class="widget-content">
+                    <div class="widget-recent">
+                        <img src="/static/blog/images/widget/resent.jpg" alt="not image">
+                        <h4><a href="javascript:;">Meet my workspace</a></h4>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the
+                            industry.
+                        </p>
+                    </div>
+                    <div class="widget-recent">
+                        <img src="/static/blog/images/widget/resent1.jpg" alt="not image">
+                        <h4><a href="javascript:;">This is how to unique idea born</a></h4>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the
+                            industry.
+                        </p>
+                    </div>
+                    <div class="widget-recent last">
+                        <img src="/static/blog/images/content/photos4.jpg" alt="not image">
+                        <h4><a href="javascript:;">Only you will choose your life.</a></h4>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            has been the
+                            industry.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3 class="widget-title"><a href="javascript:;"> 标签</a></h3>
+                <div class="bubble-line"></div>
+                <div class="widget-content">
+                    <div class="widget-tags">
+                        <# range $key, $item := .typeCommon #>
+                        <a href="?type=<# $key #>"><# $item.Name #></a>
+                        <# end #>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3 class="widget-title"><a href="javascript:;"> Buy this Theme </a></h3>
+                <div class="bubble-line"></div>
+                <div class="widget-content sm ">
+                    <p>
+                        Vivamus interdum felis posuere justo
+                        condimentum, in consequat libero lacinia. Vestibulum eget viverra nulla. Curabitur
+                        feugiat vulputate consectetur.
+                    </p>
+                    <div class="widget-more">
+                        <a href="javascript:;" class="button">purchase</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
