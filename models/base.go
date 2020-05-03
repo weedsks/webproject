@@ -18,7 +18,7 @@ func init(){
 
 
 	orm.RegisterDataBase("default", "mysql", dbuser+":"+ dbpwd +"@tcp("+dbhost+":"+ dbport +")/"+ dbname +"?charset=utf8", 30)
-	orm.RegisterModel(new(GoodsModel),new(UsersModel),new(RolesModel),new(MenusModel),new(ArticleModel),new(TypeCommonModel), new(GoodsTypeCommonRelationModel))
+	orm.RegisterModel(new(GoodsModel),new(UsersModel),new(RolesModel),new(MenusModel),new(ArticleModel),new(TypeCommonModel), new(GoodsTypeCommonRelationModel), new(CommentsModel), new(MacModel))
 }
 
 func TableNmae(str string) string {

@@ -2,6 +2,7 @@ package blog
 
 import (
 	"github.com/astaxie/beego"
+	"strconv"
 	"webproject/models"
 )
 
@@ -18,6 +19,16 @@ func (c *IndexController) Index()  {
 	if len(name) > 1 {
 		where["name"] = name
 	}
+	typeId,err := c.GetInt("type")
+	if err==nil {
+		where["type"] = strconv.Itoa(typeId)
+	}
+	tag,err := c.GetInt("tag")
+	if err==nil {
+		where["tag"] = strconv.Itoa(tag)
+	}
+
+
 	order := "g.id desc"
 
 	totalCount, data, merr := models.NewGoods().GetListPage(where, order, c.page, c.limit)
@@ -31,9 +42,14 @@ func (c *IndexController) Index()  {
 	}
 	_, typeCommon, _ := models.NewTypeCommon().GetListPage(typeCommon_where,"-order", 1, 30)
 	c.Data["typeCommon"] =  typeCommon
-	//c.JsonResult(0,"请求成功", 1, data)
-	c.TplName = c.getHomeFix() + "/index.html"
 
+	switch typeId {
+	case 3:
+		c.TplName = c.getHomeFix() + "/mac.html"
+		break
+	default:
+		c.TplName = c.getHomeFix() + "/index.html"
+	}
 
 	//c.TplName = c.getHomeFix() + "/index.html"
 }

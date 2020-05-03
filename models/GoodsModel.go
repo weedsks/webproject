@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -27,6 +28,7 @@ type GoodsModel struct {
 	IsComment int
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	IsDel int
 }
 
 func (m *GoodsModel) TableName() string {
@@ -59,6 +61,23 @@ func (m *GoodsModel) GetListPage(where map[string]string, order string, pageInde
 			sql_list += " and g.is_verify ="+ value
 			sql_count += " and g.is_verify ="+ value
 			break
+		case "type":
+			sql_list += " and g.type ="+ value
+			sql_count += " and g.type ="+ value
+			break
+		case "tag":
+			common := []*GoodsTypeCommonRelationModel{}
+			o.QueryTable("ks_goods_type_relation").Filter("TypeCommonId", value).All(&common)
+			goodsId := "";
+			for _,value := range common {
+				goodsId += (strconv.Itoa(value.GoodsId)+",")
+			}
+			if(len(goodsId)>1){
+				goodsId = strings.TrimRight(goodsId, ",")
+			}
+			sql_list += " and g.id in ("+ goodsId +" )"
+			sql_count += " and g.id in ("+ goodsId + " )"
+			break
 		default:
 
 		}
@@ -85,3 +104,10 @@ func (m *GoodsModel) GetListPage(where map[string]string, order string, pageInde
 
 
 
+func (m *GoodsModel) DelAll(ids []string) (num int64, err error){
+	o:=orm.NewOrm()
+	num, err = o.QueryTable("ks_goods").Filter("id__in", ids).Update(orm.Params{
+		"isDel": 1,
+	})
+	return
+}

@@ -15,10 +15,9 @@ type CommentsModel struct {
 	Email       string
 	Description string
 	Order       int
-	IsVerify    string
-	RoleId      int
-	Created_at  string
-	Updated_at  string
+	IsVerify    int
+	CreatedAt  string
+	UpdatedAt  string
 }
 
 func (m *CommentsModel) TableName() string {
@@ -32,8 +31,7 @@ func NewComment() *CommentsModel {
 /**
 分页查询
 */
-func (m *CommentsModel) GetListPage(where map[string]string, order string, pageIndex int, pageNum int) (totalCount int, data map[int]ListUserPageResult, err error) {
-	var comments []*CommentsModel
+func (m *CommentsModel) GetListPage(where map[string]string, order string, pageIndex int, pageNum int) (totalCount int, comments []*CommentsModel, err error) {
 	o := orm.NewOrm()
 	offset := (pageIndex - 1) * pageNum
 
@@ -45,6 +43,12 @@ func (m *CommentsModel) GetListPage(where map[string]string, order string, pageI
 			goods_id, err := strconv.Atoi(value)
 			if err == nil {
 				query = query.Filter("GoodsId", goods_id)
+			}
+			break
+		case "IsVerify":
+			IsVerify, err := strconv.Atoi(value)
+			if err == nil {
+				query = query.Filter("IsVerify", IsVerify)
 			}
 			break
 		default:

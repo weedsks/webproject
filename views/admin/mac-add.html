@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.2</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+    <script type="text/javascript" src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/static/common/tinymce/tinymce/tinymce.min.js"></script>
+
+</head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form" id="submit_form" enctype="multipart/form-data">
+            <input type="hidden" name="Id" value="">
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>标题</label>
+                <div class="layui-input-block">
+                    <input type="text" id="Name" name="Name" required="" lay-verify="required" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>简述
+                </label>
+
+                <div class="layui-input-block">
+                    <textarea name="Description" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <input type="hidden" name="SmallImage" value="" class="image">
+                <label class="layui-form-label ">照片:</label>
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="smallImage_button">上传小图</button>
+                    <div class="layui-input-block">
+                        <img class="layui-upload-img" src=""  id="smallImage_img">
+                        <p id="smallImage_p"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-hide">
+                <input type="hidden" name="Image" value="" class="image">
+                <label class="layui-form-label ">照片:</label>
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="Image_button">上传大图</button>
+                    <div class="layui-input-block">
+                        <img class="layui-upload-img" src="" id="image_img">
+                        <p id="Image_p"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面标签</label>
+                <div class="layui-input-block">
+                    <#range  $key,$item:=.typeCommon#>
+                         <input type="checkbox" name="TypeCommons"
+                                 <#if $item.IsChecked#>
+                                    checked
+                                 <#end#>
+                                value="<#$key#>" title="<#$item.Name#>">
+                    <#end#>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否审核</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="tmp_IsVerify" value="1" lay-skin="switch" lay-text="开启|关闭">
+                    <input type="hidden" name="IsVerify" value="0">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否开启评论</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="tmp_IsComment" value="1" lay-skin="switch" lay-text="开启|关闭">
+                    <input type="hidden" name="IsComment" value="0">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否推荐</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="tmp_IsRecommend" value="1"  lay-skin="switch" lay-text="开启|关闭">
+                    <input type="hidden" name="IsRecommend" value="0">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">推荐指数</label>
+                <input type="hidden" name="RecommendStars" value="">
+                <div class="layui-input-block">
+                    <div id="RecommendStars"></div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>排序</label>
+                <div class="layui-input-inline">
+                    <input type="number" id="Order" name="Order" required="" lay-verify="required" autocomplete="off"
+                           class="layui-input" value=""></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>下载链接</label>
+                <div class="layui-input-block">
+                    <input type="text" id="Order" name="DownloadUrl" required="" lay-verify="required" autocomplete="off"
+                           class="layui-input" value=""></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>内容</label>
+                <div class="">
+                    <textarea name="Content" id="mytextarea">
+
+                    </textarea>
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label"></label>
+                <button class="layui-btn" lay-filter="submit" lay-submit="">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<script>
+    tinymce.init({
+        selector: '#mytextarea',
+        //skin:'oxide-dark',
+        language:'zh_CN',
+        plugins: 'print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave indent2em autoresize',
+        toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+    styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+    table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | indent2em',
+        height: 650, //编辑器高度
+        min_height: 400,
+        fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+        font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
+        link_list: [
+            { title: '预置链接1', value: 'http://www.tinymce.com' },
+            { title: '预置链接2', value: 'http://tinymce.ax-z.cn' }
+        ],
+        image_list: [
+            { title: '预置图片1', value: 'https://www.tiny.cloud/images/glyph-tinymce@2x.png' },
+            { title: '预置图片2', value: 'https://www.baidu.com/img/bd_logo1.png' }
+        ],
+        image_class_list: [
+            { title: 'None', value: '' },
+            { title: 'Some class', value: 'class-name' }
+        ],
+        importcss_append: true,
+        //自定义文件选择器的回调内容
+        file_picker_callback: function (callback, value, meta) {
+            if (meta.filetype === 'file') {
+                callback('https://www.baidu.com/img/bd_logo1.png', { text: 'My text' });
+            }
+            if (meta.filetype === 'image') {
+                callback('https://www.baidu.com/img/bd_logo1.png', { alt: 'My alt text' });
+            }
+            if (meta.filetype === 'media') {
+                callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.baidu.com/img/bd_logo1.png' });
+            }
+        },
+        autosave_ask_before_unload: false,
+    });
+
+    layui.use('rate', function () {
+        var rate = layui.rate;
+
+        //渲染
+        var ins1 = rate.render({
+            elem: '#RecommendStars'  //绑定元素
+            <#/*,value:<#.info.RecommendStars#>*/#>
+            ,choose: function(value){
+                $("input[name='RecommendStars']").val(value)
+            }
+        });
+    });
+
+    layui.use(['form', 'layer'], function () {
+            layui.use('upload', function () {
+                var $ = layui.jquery
+                    , upload = layui.upload;
+
+                //普通图片上传
+                var uploadInst = upload.render({
+                    elem: '#smallImage_button'
+                    , url: 'http://upload-z2.qiniup.com/'
+                    , method:'post'
+                    , accept: 'images'
+                    , size: 1024*8
+                    , data: {
+                        token: function(){
+                            var token;
+                            $.ajax({
+                                async: false,//ajax 非异步获取taken
+                                type: 'post',
+                                url: '/admin/getQiNiuToken',
+                                success: function (res) {
+                                    token = res;
+                                }
+                            });
+                            return token;
+                        }
+                    }
+                    , before: function (obj) {
+                        obj.preview(function (index, file, result) {
+                            $('#smallImage_img').attr('src', result);
+                        });
+                    }
+                    , done: function (res) {
+                        //如果上传失败
+                        if (res.code > 0) {
+                            layer.msg('上传失败');
+                        }else{
+                            console.log(res)
+                            $("input[name='SmallImage']").val(res.data.src)
+                        }
+                    }
+                    , error: function () {
+                        layer.msg('上传失败o(╥﹏╥)o')
+                    }
+                });
+                var uploadInst = upload.render({
+                    elem: '#Image_button'
+                    , url: 'http://upload-z2.qiniup.com/'
+                    , method:'post'
+                    , accept: 'images'
+                    , size: 1024*8
+                    , data: {
+                        token: function(){
+                            var token;
+                            $.ajax({
+                                async: false,//ajax 非异步获取taken
+                                type: 'post',
+                                url: '/admin/getQiNiuToken',
+                                success: function (res) {
+                                    token = res;
+                                }
+                            });
+                            return token;
+                        }
+                    }
+                    , before: function (obj) {
+                        obj.preview(function (index, file, result) {
+                            $('#image_img').attr('src', result);
+                        });
+                    }
+                    , done: function (res) {
+                        //如果上传失败
+                        if (res.code > 0) {
+                            return layer.msg('上传失败');
+                        }else{
+                            $("input[name='Image']").val(res.data.src)
+                        }
+                    }
+                    , error: function () {
+                        layer.msg('上传失败o(╥﹏╥)o')
+                    }
+                });
+
+
+            });
+
+            $ = layui.jquery;
+            var form = layui.form,
+                layer = layui.layer;
+
+            //自定义验证规则
+            form.verify({
+                nikename: function (value) {
+                    if (value.length < 5) {
+                        return '昵称至少得5个字符啊';
+                    }
+                }
+            });
+
+            //监听提交
+            form.on('submit(submit)', function (data) {
+                if (data.field.tmp_IsVerify!=undefined){
+                    $('input[name=IsVerify]').val(1)
+                }else{
+                    $('input[name=IsVerify]').val(0)
+                }
+                if (data.field.tmp_IsComment!=undefined){
+                    $('input[name=IsComment]').val(1)
+                }else{
+                    $('input[name=IsComment]').val(0)
+                }
+                if (data.field.tmp_IsRecommend!=undefined){
+                    $('input[name=IsRecommend]').val(1)
+                }else{
+                    $('input[name=IsRecommend]').val(0)
+                }
+                $('#mytextarea').val(tinyMCE.editors["mytextarea"].getContent())
+                console.log($('#submit_form').serialize());
+                // console.log('==============================');
+                //发异步，把数据提交给php
+                $.ajax({
+                    type: "post",
+                    url: "/admin/macCreate",
+                    data: $('#submit_form').serialize(),
+                    dataType: "json",
+                    success: function(data){
+                        if(data.code === 0){
+                            layer.alert("提交成功", {
+                                    icon: 6
+                                },
+                                function () {
+                                    // 获得frame索引
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    //关闭当前frame
+                                    parent.layer.close(index);
+                                });
+                        }else{
+                            layer.msg(data.msg,{icon: 5})
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+
+</html>

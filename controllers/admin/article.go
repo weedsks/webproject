@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"strconv"
+	"strings"
 	"unsafe"
 	"webproject/models"
 )
@@ -158,6 +159,7 @@ func (c *ArticleController) Create() {
 		//更新主表
 		goods := models.GoodsModel{}
 		goods.Image = image
+		goods.Type = 1
 		goods.SmallImage = smallImage
 		goods.Description = description
 		goods.Name = name
@@ -194,5 +196,18 @@ func (c *ArticleController) Create() {
 	typeComon_arr, _ := models.NewTypeCommon().GetAll(1)
 	c.Data["typeCommon"] = typeComon_arr
 	c.TplName = c.getAdminFix() + "/article-add.html"
+
+}
+
+//@router /macDelAll [post]
+func (c *ArticleController) DelAll()  {
+	ids := c.GetString("ids")
+	ids_arr := strings.Split(ids, ",")
+	num, err := models.NewGoods().DelAll(ids_arr)
+	if err!=nil {
+		c.JsonResult(-1, "更新失败！"+err.Error(), 1, num)
+	}
+
+	c.JsonResult(0, "请求成功！", 1, num)
 
 }

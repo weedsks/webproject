@@ -17,8 +17,11 @@ func init() {
 		beego.NSInclude(&admin.MenusController{}),
 		//文章
 		beego.NSInclude(&admin.ArticleController{}),
+		//mac
+		beego.NSInclude(&admin.MacController{}),
 	)
 	beego.Include(&blog.IndexController{})
+	beego.Include(&blog.CommentController{})
 
 	beego.AddNamespace(ns, ns)
 

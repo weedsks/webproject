@@ -29,6 +29,7 @@ type typeCommonList struct {
 	Name string
 	Icon string
 	IsChecked int
+	Id int
 }
 
 func (m *TypeCommonModel) GetAll(typeId int) (lists map[int]*typeCommonList, err error) {
@@ -42,6 +43,7 @@ func (m *TypeCommonModel) GetAll(typeId int) (lists map[int]*typeCommonList, err
 	lists = make(map[int]*typeCommonList)
 	for _, item := range data {
 		lists[item.Id] = &typeCommonList{
+			Id:item.Id,
 			Name:      item.Name,
 			Icon:      item.Icon,
 			IsChecked: 0,

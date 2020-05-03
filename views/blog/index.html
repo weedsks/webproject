@@ -144,9 +144,9 @@
                 <div class="bubble-line"></div>
                 <div class="widget-content">
                     <ul>
-                        <# range $item:=.GoodsTypeDesc #>
+                        <# range $key,$item:=.GoodsTypeDesc #>
                         <li>
-                            <a href="javascript:;"><# $item #></a>
+                            <a href="?type=<#$key#>"><# $item #></a>
                         </li>
                         <# end #>
                     </ul>

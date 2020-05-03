@@ -81,7 +81,7 @@
                         <#range $item:=.list #>
                         <tr>
                             <td>
-                                <input type="checkbox" name="id" value="1" lay-skin="primary"><#$item.Id#>
+                                <input type="checkbox" name="id" value="<#$item.Id#>" lay-skin="primary"><#$item.Id#>
                             </td>
                             <td><#$item.Name#></td>
                             <td title="<#$item.Description#>"><#substr $item.Description 0 10#></td>
@@ -228,17 +228,35 @@
         var ids = [];
 
         // 获取选中的id
-        $('tbody input').each(function (index, el) {
+        $('tbody input[name=id]').each(function (index, el) {
             if ($(this).prop('checked')) {
                 ids.push($(this).val())
             }
         });
-
-        layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+        if(ids.length<1){
+            layer.msg('请选择需要删除的数据', {icon: 5});return false;
+        }
+        console.log(ids.length)
+        var str = ids.join(',');
+        layer.confirm('确认要删除吗？', function (index) {
             //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+            $.ajax({
+                type: "post",
+                url: "/admin/macDelAll",
+                data: {ids:str},
+                dataType: "json",
+                success: function (data) {
+                    if (data.code === 0) {
+                        layer.msg('删除成功', {icon: 6});
+                        $(".layui-form-checked").not('.header').parents('tr').remove();
+                    } else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                }
+            });
+
         });
     }
+
 </script>
 </html>

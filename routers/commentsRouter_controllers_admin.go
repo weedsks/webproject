@@ -52,6 +52,15 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["webproject/controllers/admin:ArticleController"] = append(beego.GlobalControllerRouter["webproject/controllers/admin:ArticleController"],
+        beego.ControllerComments{
+            Method: "DelAll",
+            Router: `/macDelAll`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["webproject/controllers/admin:GoodsTypeCommon"] = append(beego.GlobalControllerRouter["webproject/controllers/admin:GoodsTypeCommon"],
         beego.ControllerComments{
             Method: "Create",
@@ -120,6 +129,51 @@ func init() {
             Method: "Welcome",
             Router: `/welcome`,
             AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["webproject/controllers/admin:MacController"] = append(beego.GlobalControllerRouter["webproject/controllers/admin:MacController"],
+        beego.ControllerComments{
+            Method: "Create",
+            Router: `/macCreate`,
+            AllowHTTPMethods: []string{"*"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["webproject/controllers/admin:MacController"] = append(beego.GlobalControllerRouter["webproject/controllers/admin:MacController"],
+        beego.ControllerComments{
+            Method: "DelAll",
+            Router: `/macDelAll`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["webproject/controllers/admin:MacController"] = append(beego.GlobalControllerRouter["webproject/controllers/admin:MacController"],
+        beego.ControllerComments{
+            Method: "Detail",
+            Router: `/macDetail`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["webproject/controllers/admin:MacController"] = append(beego.GlobalControllerRouter["webproject/controllers/admin:MacController"],
+        beego.ControllerComments{
+            Method: "Index",
+            Router: `/macIndex`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["webproject/controllers/admin:MacController"] = append(beego.GlobalControllerRouter["webproject/controllers/admin:MacController"],
+        beego.ControllerComments{
+            Method: "Update",
+            Router: `/macUpdate`,
+            AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})

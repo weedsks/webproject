@@ -42,58 +42,16 @@
                 <article class="content-item">
                     <div class="entry-media">
                         <div class="post-title comment-title">
-                            <h3>3 评论</h3>
+                            <h3 id="comment_count">3 评论</h3>
                         </div>
                         <div class="bubble-line"></div>
                         <div id="comments" class="comments-area">
                             <div class="comments-wrapper">
-                                <ol class="comment-list">
-                                    <li id="comment-5">
-                                        <article>
-                                            <div class="comment-avatar">
-                                                <img src="/static/blog/images/footer/photos5.jpg" alt="no image">
-                                            </div>
-                                            <div class="comment-body">
-                                                <div class="meta-data">
-                                                    <span class="comment-author">Mercy Wagon</span>
-                                                    <span class="comment-date"> March 8. 2015 at 9:00pm </span>
-                                                </div>
-                                                <div class="comment-content">
-                                                    <p>Holisticly maximize scalable e-tailers vis-a-vis
-                                                        extensible outsourcing. Authoritatively synthesize
-                                                        standards compliant alignments before user-centric
-                                                        applications. .</p>
-                                                </div>
-
-                                            </div>
-                                        </article>
-
-                                    </li><!-- #comment-## -->
-
+                                <ol class="comment-list" id="comment_list">
                                     <li class="comment" id="comment-6">
 
-                                        <article>
-                                            <div class="comment-avatar">
-                                                <img src="/static/blog/images/footer/photos5.jpg" alt="image">
-                                            </div>
-
-                                            <div class="comment-body">
-                                                <div class="meta-data">
-                                                    <span class="comment-author">Mercy Wagon</span>
-                                                    <span class="comment-date"> March 8. 2015 at 9:00pm </span>
-                                                </div>
-                                                <div class="comment-content">
-                                                    <p>Authoritatively architect excellent experiences after
-                                                        interoperable e-commerce. Phosfluorescently leverage
-                                                        existing client-centered e-commerce after effective
-                                                        synergy.</p>
-                                                </div>
-
-                                            </div>
-                                        </article>
-
-                                    </li><!-- #comment-## -->
-                                </ol><!-- .comment-list -->
+                                    </li>
+                                </ol>
 
                             </div>
                         </div>
@@ -102,21 +60,21 @@
                 <article class="content-item">
                     <div class="entry-media">
                         <div class="post-title">
-                            <h2>Leave a reply</h2>
+                            <h2>留点什么</h2>
                         </div>
                         <div class="bubble-line"></div>
                         <div class="post-content comment">
                             <form>
                                 <div class="comment-form ">
-                                    <p class="input-name"> NAME (required) </p>
-                                    <input type="text" name="name" placeholder="">
-                                    <p class="input-name"> E-MAIL(required) </p>
-                                    <input type="text" name="name" placeholder="">
-                                    <p class="input-name"> COMMENT</p>
-                                    <textarea placeholder=""></textarea>
+                                    <p class="input-name"> 称呼 (必填) </p>
+                                    <input type="text" placeholder="称呼" name="comment_name" placeholder="">
+                                    <p class="input-name"> 邮箱(必填) </p>
+                                    <input type="text" placeholder="方便我们联系你" name="comment_email" placeholder="">
+                                    <p class="input-name"> 评论(必填)</p>
+                                    <textarea name="comment_description" placeholder="评论内容"></textarea>
                                 </div>
                                 <div class="comment-submit">
-                                    <a href="javascript:;" class="button">post comment</a>
+                                    <a href="javascript:;" id="button_comment_create" class="button">提交</a>
                                 </div>
                             </form>
                         </div>
@@ -143,24 +101,11 @@
                     <div class="bubble-line"></div>
                     <div class="widget-content">
                         <ul>
+                            <# range $key,$item:=.GoodsTypeDesc #>
                             <li>
-                                <a href="javascript:;">Video & music</a>
+                                <a href="/?type=<#$key#>"><# $item #></a>
                             </li>
-                            <li>
-                                <a href="javascript:;">Fashion</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">Travel & hiking</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">Photography</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">food recipe</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">do it yourself</a>
-                            </li>
+                            <# end #>
                         </ul>
                     </div>
                 </div>
@@ -199,12 +144,12 @@
                 </div>
 
                 <div class="widget">
-                    <h3 class="widget-title"><a href="javascript:;"> 分类标签</a></h3>
+                    <h3 class="widget-title"><a href="javascript:;"> 标签</a></h3>
                     <div class="bubble-line"></div>
                     <div class="widget-content">
                         <div class="widget-tags">
                             <# range $item := .typeCommon #>
-                            <a href="javascript:;"><# $item.Name #></a>
+                            <a href="/?type=<#$item.Id#>"><# $item.Name #></a>
                             <# end #>
                         </div>
                     </div>
@@ -227,3 +172,85 @@
             </div>
         </div>
     </div>
+
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+
+<script>
+    $(function () {
+        $.ajax({
+            type: "post",
+            url: "/commentIndex",
+            data: {
+                'id': "<# .info.Id #>",
+            },
+            dataType: "json",
+            success: function (res) {
+                if (res.code != -1) {
+                    var data = res.data;
+                    html = '';
+                    $(data).each(function(i,n) {
+                        html += `
+                        <li id="comment-5">
+                                        <article>
+                                            <div class="comment-avatar">
+                                                <img src="/static/blog/images/footer/photos`+ (i+1) +`.png" alt="no image">
+                                            </div>
+                                            <div class="comment-body">
+                                                <div class="meta-data">
+                                                    <span class="comment-author">`+ n.Name +`</span>
+                                                    <span class="comment-date"> `+n.UpdatedAt+` </span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <p>`+n.Description+`</p>
+                                                </div>
+
+                                            </div>
+                                        </article>
+
+                                    </li>
+                        `
+                    });
+                    $("#comment_list").html(html)
+                    $("#comment_count").html(res.count + ' 评论。')
+                } else {
+
+                }
+            }
+        });
+
+        $('#button_comment_create').click(function () {
+            var _name = $('input[name=comment_name]').val()
+            var _email = $('input[name=comment_email]').val()
+            var _description = $('textarea[name=comment_description]').val()
+            if(_name.length<1){
+                layer.msg('称呼不能为空！',{icon: 5});return false;
+            }
+            if(_email.length<1){
+                layer.msg('邮箱不能为空！',{icon: 5});return false;
+            }
+            if(_description.length<1){
+                layer.msg('评论不能为空！',{icon: 5});return false;
+            }
+            $.ajax({
+                type: "post",
+                url: "/commentCreate",
+                data: {
+                    'id': <#.info.Id#>,
+                    'type': <#.info.Type#>,
+                    'name':_name,
+                    'email':_email,
+                    'description':_description,
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.code != -1) {
+                        layer.msg(res.msg,{icon: 6})
+                    } else {
+                        layer.msg(res.msg,{icon: 5})
+                    }
+                }
+            })
+
+        })
+    })
+</script>

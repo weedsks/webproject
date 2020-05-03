@@ -1,0 +1,51 @@
+﻿<div class="container">
+	<div class="row">
+		<#range $item:=.list#>
+		<div class="col-sm-6">
+			<div class="grid-wrapper">
+				<div class="grid-content">
+					<article class="content-item">
+						<div class="entry-media">
+							<div class="post-title">
+								<h2> <a href="/articleDetail?id=<# $item.Id #>"><# $item.Name #> </a> </h2>
+								<div class="entry-date">
+									<ul>
+										<li>
+											<a href='#'><# $item.TypeDesc #></a>
+										</li>
+										<li><# date $item.UpdatedAt "Y-m-d" #></li>
+										<li><# $item.ViewNum #> 阅读</li>
+									</ul>
+								</div>
+							</div>
+							<div class="bubble-line"></div>
+							<div class="post-content">
+
+								<img src="<# $item.SmallImage #>" alt="not image">
+								<p>
+									<# $item.Description #>
+								</p>
+							</div>
+							<div class="bubble-line"></div>
+							<div class="post-footer">
+								<div class="row">
+									<div class="col-sm-6">
+										<a href="javascript:;" class="button">继续阅读</a>
+									</div>
+									<div class="col-sm-6 text-right">
+										<div class="content-social grid">
+											<a href="javascript:;"><i class="fa fa-wechat"></i><span>微信</span></a>
+											<a href="javascript:;"><i class="fa fa-weibo"></i><span>微博</span></a>
+											<a href="javascript:;"><i class="fa fa-link"></i><span>复制</span></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</div>
+		<#end#>
+	</div>
+</div>
