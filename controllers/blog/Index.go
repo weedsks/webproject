@@ -43,6 +43,8 @@ func (c *IndexController) Index()  {
 	_, typeCommon, _ := models.NewTypeCommon().GetListPage(typeCommon_where,"-order", 1, 30)
 	c.Data["typeCommon"] =  typeCommon
 
+	//c.JsonResult(0, "ok", 1, where)
+
 	switch typeId {
 	case 3:
 		c.TplName = c.getHomeFix() + "/mac.html"
@@ -50,8 +52,6 @@ func (c *IndexController) Index()  {
 	default:
 		c.TplName = c.getHomeFix() + "/index.html"
 	}
-
-	//c.TplName = c.getHomeFix() + "/index.html"
 }
 
 //@router /articleDetail [get]

@@ -38,7 +38,6 @@ func (c *MacController) Index() {
 
 	c.Data["count"] = totalCount
 	c.Data["list"] = data
-
 	c.TplName = c.getAdminFix() + "/mac-list.html"
 }
 //@router /macDetail [get]

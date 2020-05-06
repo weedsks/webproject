@@ -43,9 +43,9 @@
                             </div>
                             <div class="col-sm-7 text-right">
                                 <div class="content-social">
-                                    <a href="javascript:;"><i class="fa fa-wechat"></i><span>微信</span></a>
-                                    <a href="javascript:;"><i class="fa fa-weibo"></i><span>微博</span></a>
-                                    <a href="javascript:;"><i class="fa fa-link"></i><span>复制</span></a>
+                                    <a href="#"><i class="fa fa-wechat"></i><span>微信</span></a>
+                                    <a href="#"><i class="fa fa-weibo"></i><span>微博</span></a>
+                                    <a href="#"><i class="fa fa-link"></i><span>复制</span></a>
                                 </div>
                             </div>
                         </div>
@@ -78,13 +78,14 @@
                     <div class="post-footer">
                         <div class="row">
                             <div class="col-sm-5">
-                                <a href="/articleDetail?id=<# $item.Id #>" class="button">继续阅读</a>
+                                <a href="javacript:;" onclick="copyText(this)" data-text="<#$item.MovieUrl#>"
+                                   class="button">复制下载链接</a>
                             </div>
                             <div class="col-sm-7 text-right">
                                 <div class="content-social">
-                                    <a href="javascript:;"><i class="fa fa-wechat"></i><span>微信</span></a>
-                                    <a href="javascript:;"><i class="fa fa-weibo"></i><span>微博</span></a>
-                                    <a href="javascript:;"><i class="fa fa-link"></i><span>复制</span></a>
+                                    <a href="#"><i class="fa fa-wechat"></i><span>微信</span></a>
+                                    <a href="#"><i class="fa fa-weibo"></i><span>微博</span></a>
+                                    <a href="#"><i class="fa fa-link"></i><span>复制</span></a>
                                 </div>
                             </div>
                         </div>
@@ -131,11 +132,12 @@
 
                 <div class="widget-content">
                     <img src="/static/blog/images/widget/about.jpg" alt="not image">
-                    <p>Hello I’m Jenny Kurto author of Letter town blog. This is my personal space which is like to
-                        share
-                        others. And i’m living New York city working and blogging.</p>
+                    <p>
+                        这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；这个是凑数字的；
+
+                    </p>
                     <div class="widget-more">
-                        <a href="javascript:;" class="button">More story</a>
+                        <a href="#" class="button">阅读过多</a>
                     </div>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                 <div class="widget-content">
                     <div class="widget-recent">
                         <img src="/static/blog/images/widget/resent.jpg" alt="not image">
-                        <h4><a href="javascript:;">Meet my workspace</a></h4>
+                        <h4><a href="#">Meet my workspace</a></h4>
                         <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                             has been the
@@ -167,7 +169,7 @@
                     </div>
                     <div class="widget-recent">
                         <img src="/static/blog/images/widget/resent1.jpg" alt="not image">
-                        <h4><a href="javascript:;">This is how to unique idea born</a></h4>
+                        <h4><a href="#">This is how to unique idea born</a></h4>
                         <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                             has been the
@@ -176,7 +178,7 @@
                     </div>
                     <div class="widget-recent last">
                         <img src="/static/blog/images/content/photos4.jpg" alt="not image">
-                        <h4><a href="javascript:;">Only you will choose your life.</a></h4>
+                        <h4><a href="#">Only you will choose your life.</a></h4>
                         <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                             has been the
@@ -187,7 +189,7 @@
             </div>
 
             <div class="widget">
-                <h3 class="widget-title"><a href="javascript:;"> 标签</a></h3>
+                <h3 class="widget-title"><a href="#"> 标签</a></h3>
                 <div class="bubble-line"></div>
                 <div class="widget-content">
                     <div class="widget-tags">
@@ -198,8 +200,8 @@
                 </div>
             </div>
 
-            <div class="widget">
-                <h3 class="widget-title"><a href="javascript:;"> Buy this Theme </a></h3>
+            <div class="widget hide">
+                <h3 class="widget-title"><a href="#"> Buy this Theme </a></h3>
                 <div class="bubble-line"></div>
                 <div class="widget-content sm ">
                     <p>
@@ -208,10 +210,43 @@
                         feugiat vulputate consectetur.
                     </p>
                     <div class="widget-more">
-                        <a href="javascript:;" class="button">purchase</a>
+                        <a href="#" class="button">purchase</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+
+
+<script language="javascript">
+    function copyText(obj) {
+        var text = $(obj).attr('data-text');
+        console.log(text)
+        copyFun(text)
+        layer.msg("复制成功~去打开下载软件下载吧")
+    }
+
+    function copyFun(val) {
+        let input = document.createElement('input');
+        input.setAttribute('readonly', 'readonly');
+        input.setAttribute('value', val);
+        document.body.appendChild(input);
+
+        try {
+            input.select();
+            input.setSelectionRange(0, 9999);
+        } catch {
+
+        }
+        if (document.execCommand('copy')) {
+            document.execCommand('copy');
+            layer.msg('复制成功.')
+        } else {
+            layer.msg('复制失败.')
+        }
+
+        document.body.removeChild(input);
+    }
+</script>

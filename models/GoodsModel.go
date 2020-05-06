@@ -41,6 +41,8 @@ func NewGoods() *GoodsModel {
 
 type GetGoodsListPageResult struct {
 	GoodsModel
+	DownUrl string
+	MovieUrl string
 	TypeDesc string
 	TypeCommon map[int]TypeCommonModel
 }
@@ -49,13 +51,13 @@ type GetGoodsListPageResult struct {
 func (m *GoodsModel) GetListPage(where map[string]string, order string, pageIndex int, pageNum int) (totalCount int, list []*GetGoodsListPageResult, err error) {
 	offset := (pageIndex - 1) * pageNum
 	o := orm.NewOrm()
-	sql_list :="select g.* from ks_goods as g where g.is_del =0"
+	sql_list :="select g.*,m.download_url as movie_url from ks_goods as g left join ks_movie as m on m.goods_id=g.id where g.is_del =0"
 	sql_count :="select count(*) from ks_goods as g where g.is_del =0"
 	for key, value := range where {
 		switch key {
 		case "name":
-			sql_list += " and g.name like %"+ value +"%"
-			sql_count += " and g.name like %"+ value +"%"
+			sql_list += " and g.name like '%"+ value +"%'"
+			sql_count += " and g.name like '%"+ value +"%'"
 			break
 		case "is_verify":
 			sql_list += " and g.is_verify ="+ value
