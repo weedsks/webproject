@@ -84,8 +84,8 @@ func (m *GoodsModel) GetListPage(where map[string]string, order string, pageInde
 
 		}
 	}
-	sql_list +=" order by ? limit ?,?"
-	o.Raw(sql_list, order,offset,pageNum).QueryRows(&list)
+	sql_list +=" order by "+ order +" limit ?,?"
+	o.Raw(sql_list,offset,pageNum).QueryRows(&list)
 	o.Raw(sql_count).QueryRow(&totalCount)
 
 	GoodsTypeDesc := GoodsTypeDesc()
