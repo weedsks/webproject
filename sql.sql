@@ -1,4 +1,4 @@
-x/*
+/*
  Navicat Premium Data Transfer
 
  Source Server         : localhost
@@ -11,7 +11,7 @@ x/*
  Target Server Version : 50643
  File Encoding         : 65001
 
- Date: 02/06/2020 18:06:01
+ Date: 02/06/2020 18:15:18
 */
 
 SET NAMES utf8mb4;
@@ -384,7 +384,7 @@ CREATE TABLE `ks_users` (
 -- Records of ks_users
 -- ----------------------------
 BEGIN;
-INSERT INTO `ks_users` VALUES (1, 'weeds', '17620940805', '7b4b0d021a5a54f896ffc4a3c18f8d5b', 'weedsyl@163.com', '2020-02-14 17:09:16', '2020-05-10 14:57:35', '', 0, 1);
+INSERT INTO `ks_users` VALUES (1, 'weeds', '17620940805', '3a3d95dca53caacaf2ba6acbc9f9d4d6', 'weedsyl@163.com', '2020-02-14 17:09:16', '2020-06-02 18:14:02', '', 0, 1);
 INSERT INTO `ks_users` VALUES (2, 'weedsks', '17620940905', '8ac51085d5b4550d3b40f54d67fdf490', 'weeds@163.com', '2020-02-15 22:02:45', '2020-04-06 00:13:31', '', 1, 2);
 COMMIT;
 
