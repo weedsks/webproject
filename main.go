@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 )
 
+
 func main() {
 	orm.Debug = true
 	beego.Run()

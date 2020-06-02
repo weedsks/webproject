@@ -24,5 +24,4 @@ func init() {
 	beego.Include(&blog.CommentController{})
 
 	beego.AddNamespace(ns, ns)
-
 }
